@@ -1,8 +1,14 @@
 #!/usr/bin/python3
-def square_matrix_simple(matrix=[]):
-    new_matrix = matrix.copy()
 
-    for i in range(len(matrix)):
-        new_matrix[i] = list(map(lambda x: x**2, matrix[i]))
+def square_matrix_simple(matrix=[]):
+    """computes the square of a number"""
+
+    new_matrix = []
+
+    for i in matrix:
+        if type(i) == list:
+            new_matrix.append(list(map((lambda x: x ** 2), i)))
+        else:
+            new_matrix.append(i ** 2)
 
     return (new_matrix)
