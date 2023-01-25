@@ -1,22 +1,31 @@
 #!/usr/bin/python3
+""" Creating a class Node"""
+
+
+
 class Node:
+    """A class that takes a node object"""
+
     def __init__(self, data, next_node=None):
+        """Initilizes the instances of a node"""
         self.data = data
         self.next_node = next_node
 
     @property
     def data(self):
+        """Sets the data"""
         return self.__data
-
-    @property
-    def next_node(self):
-        return self.__next_node
 
     @data.setter
     def data(self, value):
         if not isinstance(value, int):
             raise TypeError("data must be an integer")
         self.__data = value
+
+    @property
+    def next_node(self):
+        """Set the next node"""
+        return self.__next_node
 
     @next_node.setter
     def next_node(self, value):
@@ -26,35 +35,38 @@ class Node:
 
 
 class SinglyLinkedList:
-    def __init__(self):
-        self.__head = None
+    """Creating singly linked list"""
+
 
     def __str__(self):
-        stri = ""
-        temp = self.__head
-        while (temp):
-            stri = stri + str(temp.data)
-            if (temp.next_node):
-                stri = stri + "\n"
-            temp = temp.next_node
-        return stri
+        """Return string version of the pointer"""
+        rtn = ""
+        ptr = self.__head
+
+        while ptr is not None:
+            rtn += str(ptr.data)
+            if ptr.next_node is not None:
+                rtn += "\n"
+            ptr = ptr.next_node
+
+        return rtn
+
+    def __init__(self):
+        """Initialize a head"""
+        self.__head = None
 
     def sorted_insert(self, value):
-        if not self.__head:
-            self.__head = Node(value, None)
+        """Define sorted insert to a new node"""
+        ptr = self.__head
+
+        while ptr is not None:
+            if ptr.data > value:
+                break
+            ptr_prev = ptr
+            ptr = ptr.next_node
+
+        newNode = Node(value, ptr)
+        if ptr == self.__head:
+            self.__head = newNode
         else:
-            aux1 = self.__head
-            aux2 = aux1.next_node
-            if (self.__head.data > value):
-                self.__head = Node(value, self.__head)
-            else:
-                while (aux2):
-                    if (aux2.data > value):
-                        new = Node(value, None)
-                        new.next_node = aux2
-                        aux1.next_node = new
-                        break
-                    aux1 = aux1.next_node
-                    aux2 = aux2.next_node
-                new = Node(value, aux2)
-                aux1.next_node = new
+            ptr_prev.next_node = newNode
