@@ -1,12 +1,17 @@
-#!/usr/bin/python3
-""" Python script that fetches https://alx-intranet.hbtn.io/status """
-import urllib.request
-
-
+##!/usr/bin/python3
+""" use urllib to get information from a web-site
+"""
 if __name__ == "__main__":
-    with urllib.request.urlopen('https://alx-intranet.hbtn.io/status') as response:
-        html = response.read()
-        print('Body response:')
-        print('\t- type: {}'.format(type(html)))
-        print('\t- content: {}'.format(html))
-        print('\t- utf8 content: {}'.format(html.decode("utf-8")))
+    import urllib.request
+
+    req = urllib.request.Request('https://alx-intranet.hbtn.io/status')
+    try:
+        with urllib.request.urlopen(req) as response:
+            result = response.read()
+            ty = type(result)
+            con = result
+            con_u = result.decode('utf-8')
+            print("Body response:\n\t- type: {}\n\t- content: {}\n\t\
+- utf8 content: {}".format(ty, con, con_u))
+    except urllib.error.URLError as e:
+        print(e.reason)
